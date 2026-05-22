@@ -10,6 +10,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import TopicList from "./pages/TopicList";
 import Lesson from "./pages/Lesson";
+import PracticeSession from "./pages/PracticeSession";
 import BottomNav from "./components/BottomNav";
 
 export default function App() {
@@ -56,6 +57,7 @@ export default function App() {
         <Route path="/topics" element={<TopicList user={user} t={t} />} />
         <Route path="/lesson" element={<Lesson user={user} t={t} />} />
         <Route path="/practice" element={<Practice user={user} t={t} />} />
+        <Route path="/practice/session" element={<PracticeSession user={user} t={t} />} />
         <Route path="/progress" element={<Progress user={user} t={t} />} />
         <Route path="/profile" element={<Profile user={user} logout={logout} t={t} toggleTheme={toggleTheme} isDark={isDark} />} />
         <Route path="*" element={<Navigate to="/" />} />
