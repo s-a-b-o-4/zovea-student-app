@@ -155,6 +155,54 @@ export default function Profile({ user, logout, t, toggleTheme, isDark }) {
           ))}
         </div>
 
+        {/* Support Links */}
+        <div style={{ background: t.surface, border: `1px solid ${t.border}`, borderRadius: 20, overflow: "hidden", boxShadow: t.shadow, marginBottom: 16 }}>
+          {[
+            {
+              label: "Contact us",
+              Icon: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" stroke={t.textMuted} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+              external: false
+            },
+            {
+              label: "Community forum",
+              Icon: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="9" cy="8" r="3" stroke={t.textMuted} strokeWidth="2"/><path d="M3 20C3 17 5.69 14 9 14C12.31 14 15 17 15 20" stroke={t.textMuted} strokeWidth="2" strokeLinecap="round"/><circle cx="17" cy="8" r="2.5" stroke={t.textMuted} strokeWidth="2"/><path d="M15 14C16.11 14 17.5 14.5 18.5 15.5" stroke={t.textMuted} strokeWidth="2" strokeLinecap="round"/></svg>,
+              external: true
+            },
+            {
+              label: "About us",
+              Icon: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="10" stroke={t.textMuted} strokeWidth="2"/><path d="M12 8v4M12 16h.01" stroke={t.textMuted} strokeWidth="2.5" strokeLinecap="round"/></svg>,
+              external: true
+            },
+          ].map((item, i, arr) => (
+            <div key={item.label} style={{
+              display: "flex", alignItems: "center", gap: 16,
+              padding: "18px 20px",
+              borderBottom: i < arr.length - 1 ? `1px solid ${t.border}` : "none",
+              cursor: "pointer", transition: "background 0.2s"
+            }}
+              onMouseEnter={e => e.currentTarget.style.background = t.cardHover}
+              onMouseLeave={e => e.currentTarget.style.background = "transparent"}
+            >
+              <div style={{ width: 36, height: 36, borderRadius: 12, background: t.card, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                <item.Icon />
+              </div>
+              <span style={{ flex: 1, fontWeight: 600, color: t.text, fontSize: 16 }}>{item.label}</span>
+              {item.external ? (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" stroke={t.textDim} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <polyline points="15,3 21,3 21,9" stroke={t.textDim} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  <line x1="10" y1="14" x2="21" y2="3" stroke={t.textDim} strokeWidth="2" strokeLinecap="round"/>
+                </svg>
+              ) : (
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+                  <path d="M9 18l6-6-6-6" stroke={t.textDim} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              )}
+            </div>
+          ))}
+        </div>
+
+
         {/* Logout */}
         <button onClick={logout} style={{ width: "100%", background: t.redBg, border: `1px solid ${t.red}22`, borderRadius: 16, padding: "15px", display: "flex", alignItems: "center", justifyContent: "center", gap: 10, color: t.red, fontWeight: 800, fontSize: 14, cursor: "pointer" }}>
           <LogoutIcon color={t.red} /> Log Out

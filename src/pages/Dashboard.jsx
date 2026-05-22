@@ -1,6 +1,9 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { getMentorGreeting, mentors } from "../mentor";
+import MentorMessage from "../components/MentorMessage";
+import TopBar from "../components/TopBar";
 
 const API = "https://zovea-landing-production.up.railway.app";
 
@@ -39,7 +42,10 @@ export default function Dashboard({ user, t }) {
   const [subjects, setSubjects] = useState([]);
   const [stats] = useState({ total_xp: 0, streak_days: 0, lessons_completed: 0 });
   const [loading, setLoading] = useState(true);
+  const [mentorMsg, setMentorMsg] = useState("");
   const navigate = useNavigate();
+  const mentorId = localStorage.getItem("zovea_mentor") || "ama";
+  const mentor = mentors[mentorId];
   const maxBar = Math.max(...weekData);
   const level = Math.floor(stats.total_xp / 250) + 1;
   const firstName = user.full_name?.split(" ")[0] || "Student";
@@ -49,6 +55,7 @@ export default function Dashboard({ user, t }) {
       .then(res => setSubjects(res.data))
       .catch(console.error)
       .finally(() => setLoading(false));
+    setMentorMsg(getMentorGreeting(mentorId));
   }, []);
 
   return (
@@ -68,6 +75,17 @@ export default function Dashboard({ user, t }) {
             </div>
           </div>
         </div>
+
+        {/* Mentor Message */}
+        {mentorMsg && (
+          <MentorMessage
+            mentorId={mentorId}
+            message={mentorMsg}
+            type="default"
+            t={t}
+            onDismiss={() => setMentorMsg("")}
+          />
+        )}
 
         {/* XP Bar */}
         <div>

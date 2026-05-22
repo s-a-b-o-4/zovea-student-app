@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
+import { getFailureMessage, getStreakMessage, mentors } from "../mentor";
+import MentorMessage from "../components/MentorMessage";
 
 const API = "https://zovea-landing-production.up.railway.app";
 
@@ -35,8 +37,10 @@ export default function PracticeSession({ t }) {
   const [finished, setFinished] = useState(false);
   const [timeLeft, setTimeLeft] = useState(0);
   const timerRef = useRef(null);
-
   const isExam = mode === "exam";
+  const [consecutiveWrong, setConsecutiveWrong] = useState(0);
+  const [mentorMsg, setMentorMsg] = useState(null);
+  const mentorId = localStorage.getItem("zovea_mentor") || "ama";
 
   useEffect(() => {
     axios.get(`${API}/api/past-questions/${subjectId}?limit=10`)
@@ -78,11 +82,22 @@ export default function PracticeSession({ t }) {
     if (answered) return;
     setSelected(key);
     if (!isExam) {
-      setAnswered(true);
-      if (key === q.correct_answer) setScore(s => s + 1);
-      setAnswers(a => [...a, { selected: key, correct: key === q.correct_answer, correctAnswer: q.correct_answer, explanation: q.explanation, question: q.question }]);
+        setAnswered(true);
+        const correct = key === q.correct_answer;
+        if (correct) {
+            setScore(s => s + 1);
+            setConsecutiveWrong(0);
+        } else {
+        const newWrong = consecutiveWrong + 1;
+        setConsecutiveWrong(newWrong);
+        if (newWrong >= 2) {
+            setMentorMsg({ text: getFailureMessage(mentorId), type: "failure" });
+            setConsecutiveWrong(0);
+        }
     }
-  };
+    setAnswers(a => [...a, { selected: key, correct, correctAnswer: q.correct_answer, explanation: q.explanation, question: q.question }]);
+  }
+};
 
   const handleExamNext = () => {
     const correct = selected === q.correct_answer;
@@ -254,6 +269,16 @@ export default function PracticeSession({ t }) {
         <div style={{ background: t.surface, border: `1px solid ${t.border}`, borderRadius: 20, padding: "20px", marginBottom: 18, boxShadow: t.shadow }}>
           <p style={{ fontSize: 16, fontWeight: 700, color: t.text, lineHeight: 1.6, letterSpacing: -0.2 }}>{q?.question}</p>
         </div>
+
+        {mentorMsg && (
+            <MentorMessage
+                mentorId={mentorId}
+                message={mentorMsg.text}
+                type={mentorMsg.type}
+                t={t}
+                onDismiss={() => setMentorMsg(null)}
+            />
+        )}
 
         {/* Options */}
         <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 18 }}>

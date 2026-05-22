@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import TopBar from "../components/TopBar";
 import axios from "axios";
+
 
 const API = "https://zovea-landing-production.up.railway.app";
 

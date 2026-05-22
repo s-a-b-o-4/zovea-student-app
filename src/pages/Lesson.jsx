@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "axios";
+import { getFailureMessage, getStreakMessage, getSessionCloseMessage, mentors } from "../mentor";
+import MentorMessage from "../components/MentorMessage";
 
 const API = "https://zovea-landing-production.up.railway.app";
 
@@ -96,6 +98,9 @@ function Quiz({ questions, t, onComplete }) {
   const [score, setScore] = useState(0);
   const [finished, setFinished] = useState(false);
   const [answers, setAnswers] = useState([]);
+  const [consecutiveWrong, setConsecutiveWrong] = useState(0);
+  const [mentorMsg, setMentorMsg] = useState("");
+  const mentorId = localStorage.getItem("zovea_mentor") || "ama";
 
   const q = questions[current];
   const opts = [
@@ -110,7 +115,17 @@ function Quiz({ questions, t, onComplete }) {
     setSelected(key);
     setAnswered(true);
     const correct = key === q.correct_answer;
-    if (correct) setScore(s => s + 1);
+    if (correct) {
+      setScore(s => s + 1);
+      setConsecutiveWrong(0);
+    } else {
+      const newWrong = consecutiveWrong + 1;
+      setConsecutiveWrong(newWrong);
+      if (newWrong >= 2) {
+        setMentorMsg({ text: getFailureMessage(mentorId), type: "failure" });
+        setConsecutiveWrong(0);
+      }
+    }
     setAnswers(a => [...a, { correct, explanation: q.explanation }]);
   };
 
@@ -204,6 +219,15 @@ function Quiz({ questions, t, onComplete }) {
         <p style={{ fontSize: 16, fontWeight: 700, color: t.text, lineHeight: 1.6, letterSpacing: -0.2 }}>{q?.question}</p>
       </div>
 
+      {mentorMsg && (
+        <MentorMessage
+          mentorId={mentorId}
+          message={mentorMsg.text}
+          type={mentorMsg.type}
+          t={t}
+          onDismiss={() => setMentorMsg(null)}
+        />
+      )}
       <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 18 }}>
         {opts.map(opt => (
           <button key={opt.key} onClick={() => handleSelect(opt.key)} style={{
