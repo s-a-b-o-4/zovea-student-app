@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const BellIcon = ({ color }) => (
   <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
@@ -225,13 +226,13 @@ export default function Social({ t, user }) {
     <div style={{ background: t.bg, minHeight: "100vh", paddingBottom: 100 }}>
 
       {/* Top Bar */}
-      <div style={{ background: t.surface, borderBottom: `1px solid ${t.border}`, padding: "56px 20px 0" }}>
+      <div style={{ background: t.surface, borderBottom: `1px solid ${t.border}`, padding: "14px 20px 0", position: "sticky", top: 0, zIndex: 50 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 16 }}>
           <div style={{ width: 36, height: 36, borderRadius: 12, background: "linear-gradient(135deg, #00C896, #4B7BEC)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 13, fontWeight: 900, color: "#fff" }}>
             {initials}
           </div>
           <h1 style={{ fontSize: 18, fontWeight: 900, color: t.text, letterSpacing: -0.5 }}>Social</h1>
-          <button style={{ background: "none", border: "none", cursor: "pointer", padding: 4 }}>
+          <button onClick={() => navigate("/notifications")} style={{ background: "none", border: "none", cursor: "pointer", padding: 4 }}>
             <BellIcon color={t.textMuted} />
           </button>
         </div>

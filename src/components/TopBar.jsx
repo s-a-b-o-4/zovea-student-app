@@ -15,7 +15,8 @@ export default function TopBar({ t, user, title }) {
   return (
     <div style={{
       display: "flex", justifyContent: "space-between", alignItems: "center",
-      padding: "56px 20px 16px",
+      padding: "14px 20px 14px",
+      position: "sticky", top: 0, zIndex: 50,
       background: t.surface, borderBottom: `1px solid ${t.border}`
     }}>
       {/* Profile avatar */}
@@ -38,7 +39,7 @@ export default function TopBar({ t, user, title }) {
       <h1 style={{ fontSize: 17, fontWeight: 900, color: t.text, letterSpacing: -0.3 }}>{title}</h1>
 
       {/* Notification bell */}
-      <button style={{ background: "none", border: "none", cursor: "pointer", padding: 4 }}>
+      <button onClick={() => navigate("/notifications")} style={{ background: "none", border: "none", cursor: "pointer", padding: 4 }}>
         <BellIcon color={t.textMuted} />
       </button>
     </div>

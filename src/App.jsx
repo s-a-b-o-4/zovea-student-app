@@ -14,6 +14,10 @@ import Lesson from "./pages/Lesson";
 import PracticeSession from "./pages/PracticeSession";
 import BottomNav from "./components/BottomNav";
 import Social from "./pages/Social";
+import History from "./pages/History";
+import Notifications from "./pages/Notifications";
+import AccountSettings from "./pages/AccountSettings";
+import PrivacySecurity from "./pages/PrivacySecurity";
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -70,6 +74,10 @@ export default function App() {
         <Route path="/profile" element={<Profile user={user} logout={logout} t={t} toggleTheme={toggleTheme} isDark={isDark} />} />
         <Route path="*" element={<Navigate to="/" />} />
         <Route path="/social" element={<Social user={user} t={t} />} />
+        <Route path="/history" element={<History t={t} />} />
+        <Route path="/notifications" element={<Notifications t={t} />} />
+        <Route path="/account-settings" element={<AccountSettings t={t} user={user} />} />
+        <Route path="/privacy-security" element={<PrivacySecurity t={t} />} />
       </Routes>
       <BottomNav t={t} />
     </div>

@@ -62,7 +62,7 @@ export default function Dashboard({ user, t }) {
     <div style={{ background: t.bg, minHeight: "100vh", paddingBottom: 100 }}>
 
       {/* Header */}
-      <div style={{ padding: "56px 20px 24px", background: t.surface, borderBottom: `1px solid ${t.border}` }}>
+      <div style={{ padding: "14px 20px 20px", background: t.surface, borderBottom: `1px solid ${t.border}`, position: "sticky", top: 0, zIndex: 50 }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 20 }}>
           <div>
             <p style={{ color: t.textMuted, fontSize: 13, fontWeight: 500 }}>{greetings()}</p>

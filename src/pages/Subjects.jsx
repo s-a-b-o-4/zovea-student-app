@@ -29,7 +29,7 @@ export default function Subjects({ t }) {
 
   return (
     <div style={{ background: t.bg, minHeight: "100vh", paddingBottom: 100 }}>
-      <div style={{ background: t.surface, borderBottom: `1px solid ${t.border}`, padding: "56px 20px 20px" }}>
+      <div style={{ background: t.surface, borderBottom: `1px solid ${t.border}`, padding: "14px 20px 20px" , position: "sticky", top: 0, zIndex: 50}}>
         <h1 style={{ fontSize: 22, fontWeight: 900, color: t.text, letterSpacing: -0.5 }}>Subjects</h1>
         <p style={{ color: t.textMuted, fontSize: 13, marginTop: 4 }}>JHS Core Curriculum</p>
       </div>

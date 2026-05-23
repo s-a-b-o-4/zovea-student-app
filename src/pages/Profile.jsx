@@ -1,3 +1,5 @@
+import { useNavigate } from "react-router-dom";
+
 const SettingsIcon = ({ color }) => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
     <circle cx="12" cy="12" r="3" stroke={color} strokeWidth="2.5"/>
@@ -9,6 +11,14 @@ const BellIcon = ({ color }) => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
     <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
     <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke={color} strokeWidth="2.5" strokeLinecap="round"/>
+  </svg>
+);
+
+const HistoryIcon = ({ color }) => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+    <path d="M1 4v6h6" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M3.51 15a9 9 0 1 0 .49-4" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M12 7v5l3 3" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 
@@ -30,6 +40,13 @@ const DownloadIcon = ({ color }) => (
     <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
     <polyline points="7,10 12,15 17,10" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
     <line x1="12" y1="15" x2="12" y2="3" stroke={color} strokeWidth="2.5" strokeLinecap="round"/>
+  </svg>
+);
+
+const ShieldIcon = ({ color }) => (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M9 12l2 2 4-4" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
   </svg>
 );
 
@@ -72,22 +89,28 @@ const LockIcon = ({ color }) => (
   </svg>
 );
 
+
+
 export default function Profile({ user, logout, t, toggleTheme, isDark }) {
   const initials = user.full_name?.split(" ").map(n => n[0]).join("").toUpperCase().slice(0, 2) || "S";
 
+  const navigate = useNavigate();
+
   const menuItems = [
-    { Icon: SettingsIcon, label: "Account Settings",      color: t.blue,   bg: t.blueBg },
-    { Icon: BellIcon,     label: "Notifications",         color: t.yellow, bg: t.yellowBg },
+    { Icon: SettingsIcon, label: "Account Settings", color: t.blue, bg: t.blueBg, action: () => navigate("/account-settings") },
+    { Icon: BellIcon, label: "Notifications", color: t.yellow, bg: t.yellowBg, action: () => navigate("/notifications") },
+    { Icon: ShieldIcon, label: "Privacy & Security", color: t.red, bg: t.redBg, action: () => navigate("/privacy-security") },
+    { Icon: HistoryIcon, label: "History", color: t.green, bg: t.greenBg, action: () => navigate("/history") },
     { Icon: isDark ? SunIcon : MoonIcon, label: isDark ? "Light Mode" : "Dark Mode", color: t.purple, bg: t.purpleBg, action: toggleTheme },
-    { Icon: DownloadIcon, label: "Download for Offline",  color: t.green,  bg: t.greenBg },
-    { Icon: HelpIcon,     label: "Help & Support",        color: t.textMuted, bg: t.card },
+    { Icon: DownloadIcon, label: "Download for Offline", color: "#0EA5E9", bg: "#0EA5E918" },
+    { Icon: HelpIcon, label: "Help & Support", color: t.textMuted, bg: t.card },
   ];
 
   return (
     <div style={{ background: t.bg, minHeight: "100vh", paddingBottom: 100 }}>
 
       {/* Header */}
-      <div style={{ background: t.surface, borderBottom: `1px solid ${t.border}`, padding: "56px 20px 28px" }}>
+      <div style={{ background: t.surface, borderBottom: `1px solid ${t.border}`, padding: "14px 20px 20px",position: "sticky", top: 0, zIndex: 50 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
           <div style={{ width: 64, height: 64, borderRadius: 20, background: `linear-gradient(135deg, ${t.green}, ${t.blue})`, display: "flex", alignItems: "center", justifyContent: "center", fontSize: 22, fontWeight: 900, color: "#fff", boxShadow: `0 8px 24px ${t.green}33`, flexShrink: 0 }}>
             {initials}

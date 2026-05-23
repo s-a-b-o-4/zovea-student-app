@@ -67,7 +67,7 @@ export default function BottomNav({ t }) {
       position: "fixed", bottom: 0, left: 0, right: 0,
       background: t.nav, borderTop: `1px solid ${t.navBorder}`,
       display: "flex", justifyContent: "space-around", alignItems: "center",
-      padding: "10px 0 18px", zIndex: 100,
+      padding: "1px 0 1px", zIndex: 100,
       backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
     }}>
       {tabs.map(({ path, label, Icon }) => {
@@ -80,7 +80,7 @@ export default function BottomNav({ t }) {
           }}>
             {active && (
               <div style={{
-                position: "absolute", top: -10, left: "50%",
+                position: "absolute", top: -1, left: "50%",
                 transform: "translateX(-50%)",
                 width: 28, height: 3, borderRadius: 10, background: t.green
               }} />

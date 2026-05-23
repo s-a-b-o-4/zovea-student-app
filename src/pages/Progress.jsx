@@ -1,3 +1,5 @@
+import TopBar from "../components/TopBar";
+
 const subjectData = [
   { name: "English Language",   color: "#A55EEA", progress: 0,
     Icon: ({ c }) => <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><rect x="4" y="3" width="14" height="18" rx="2" fill={c} fillOpacity="0.2" stroke={c} strokeWidth="2"/><path d="M8 8H14M8 12H14M8 16H11" stroke={c} strokeWidth="2" strokeLinecap="round"/></svg>
@@ -22,7 +24,7 @@ const subjectData = [
 export default function Progress({ t }) {
   return (
     <div style={{ background: t.bg, minHeight: "100vh", paddingBottom: 100 }}>
-      <div style={{ background: t.surface, borderBottom: `1px solid ${t.border}`, padding: "56px 20px 20px" }}>
+      <div style={{ background: t.surface, borderBottom: `1px solid ${t.border}`, padding: "14px 20px 20px", position: "sticky", top: 0, zIndex: 50 }}>
         <h1 style={{ fontSize: 22, fontWeight: 900, color: t.text, letterSpacing: -0.5 }}>Progress</h1>
         <p style={{ color: t.textMuted, fontSize: 13, marginTop: 4 }}>Track your learning journey</p>
       </div>
